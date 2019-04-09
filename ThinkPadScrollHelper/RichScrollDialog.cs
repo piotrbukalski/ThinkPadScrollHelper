@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Threading;
+using ThinkPadScrollHelper.Utils;
 
 namespace ThinkPadScrollHelper
 {
@@ -29,7 +30,7 @@ namespace ThinkPadScrollHelper
                 // ignored
             }
 
-            _hwndPropertyDialog = Util.FindMousePropertiesWindow();
+            _hwndPropertyDialog = WindowUtil.FindMousePropertiesWindow();
             if (_hwndPropertyDialog == IntPtr.Zero)
             {
                 throw new Exception("Mouse Properties Dialog not found");
@@ -37,7 +38,7 @@ namespace ThinkPadScrollHelper
 
             Console.WriteLine("hwndProperty = " + _hwndPropertyDialog);
 
-            var hwndTab = Util.FindChildWindowByClassName(_hwndPropertyDialog, "SysTabControl32");
+            var hwndTab = WindowUtil.FindChildWindowByClassName(_hwndPropertyDialog, "SysTabControl32");
             if (hwndTab == IntPtr.Zero)
             {
                 throw new Exception("Mouse properties TabControl not found");
@@ -55,14 +56,14 @@ namespace ThinkPadScrollHelper
                 // ignored
             }
 
-            _hwndCheck = Util.FindChildWindowByCaption(_hwndPropertyDialog, "Thinkpad Preferred Scrolling");
+            _hwndCheck = WindowUtil.FindChildWindowByCaption(_hwndPropertyDialog, "Thinkpad Preferred Scrolling");
             if (_hwndCheck == IntPtr.Zero)
             {
                 throw new Exception("Mouse Properties Checkbox not found");
             }
             Console.WriteLine("hwndCheck = " + _hwndCheck);
 
-            _hwndApplyButton = Util.FindChildWindowByCaption(_hwndPropertyDialog, "&Apply");
+            _hwndApplyButton = WindowUtil.FindChildWindowByCaption(_hwndPropertyDialog, "&Apply");
             if (_hwndApplyButton == IntPtr.Zero)
             {
                 throw new Exception("Mouse Properties ApplyButton not found");
