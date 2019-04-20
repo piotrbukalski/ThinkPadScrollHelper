@@ -1,5 +1,5 @@
 using System;
-using System.Linq;
+using System.Collections.Generic;
 using System.Threading;
 using ThinkPadScrollHelper.Utils;
 
@@ -7,12 +7,9 @@ namespace ThinkPadScrollHelper
 {
     internal class Program
     {
-        private const string VisualStudioProcessName = "devenv";
-
-        private static readonly string[] RichScrollBlackList = 
-        {
-            "conhost", "ssms", "sourcetree", "hscrollfun"
-        };
+        private static readonly HashSet<string> RichScrollBlackList = new HashSet<string>(
+            new [] { "devenv", "powershell_ise", "notepad++", "conhost", "ssms", "sourcetree", "hscrollfun" }, 
+            StringComparer.OrdinalIgnoreCase);
 
         public static void Main(string[] args)
         {
@@ -67,13 +64,7 @@ namespace ThinkPadScrollHelper
                 return true;
             }
 
-            // quick path for VS
-            if (processName.Contains(VisualStudioProcessName))
-            {
-                return false;
-            }
-
-            return !RichScrollBlackList.Any(processName.Contains);
+            return !RichScrollBlackList.Contains(processName);
         }
     }
 }
